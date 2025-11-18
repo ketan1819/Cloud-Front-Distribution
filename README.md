@@ -36,7 +36,7 @@ The first step involved creating a new Amazon S3 bucket to host the static websi
 - Checked bucket properties and overview details
 
 **Screenshots:**
-- `1.jpg` - S3 Bucket Creation console with bucket name input
+- ![1](Screenshots/1.jpg)
 - `2.jpg` - S3 Bucket Console Overview showing bucket details
 - `7.jpg` - Additional S3 bucket setup views and configuration
 
