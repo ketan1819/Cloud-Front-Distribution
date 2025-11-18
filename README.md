@@ -1,7 +1,7 @@
 
-# CloudFront Distribution with S3 Origin (OAC/OAI) – Project Report
+# CloudFront Distribution with S3 Origin (OAC/OAI) – Implementation Report
 
-This project demonstrates the complete setup of an Amazon S3 bucket as a CloudFront origin, secured using Origin Access Control (OAC) / Origin Access Identity (OAI), with proper distribution configuration, access restriction, validation, and caching behavior testing.
+This implementation demonstrates the complete setup of an Amazon S3 bucket as a CloudFront origin, secured using Origin Access Control (OAC) / Origin Access Identity (OAI), with proper distribution configuration, access restriction, validation, and caching behavior testing.
 
 ---
 
