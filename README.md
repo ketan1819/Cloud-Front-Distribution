@@ -36,9 +36,9 @@ The first step involved creating a new Amazon S3 bucket to host the static websi
 - Checked bucket properties and overview details
 
 **Screenshots:**
-- ![1](Screenshots/1.png)
-- ![1](Screenshots/2.png)
+
 - ![1](Screenshots/7.png)
+- ![1](Screenshots/6.png)
 
 **Why this matters:** Proper bucket naming and regional selection are crucial for optimal performance and compliance with organizational policies. The bucket name must be globally unique and follow DNS naming conventions.
 
@@ -162,7 +162,6 @@ Origin Access Control is the modern replacement for Origin Access Identity and p
 Cache behavior settings determine how CloudFront handles requests, caches content, and forwards requests to the origin.
 
 **Screenshots:**
-- ![1](Screenshots/6.png)
 - ![1](Screenshots/9.png)
 - ![1](Screenshots/20.png)
 - ![1](Screenshots/21.png)
