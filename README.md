@@ -36,9 +36,9 @@ The first step involved creating a new Amazon S3 bucket to host the static websi
 - Checked bucket properties and overview details
 
 **Screenshots:**
-- ![1](Screenshots/1.jpg)
-- `2.jpg` - S3 Bucket Console Overview showing bucket details
-- `7.jpg` - Additional S3 bucket setup views and configuration
+- ![1](Screenshots/1.png)
+- ![1](Screenshots/2.png)
+- ![1](Screenshots/7.png)
 
 **Why this matters:** Proper bucket naming and regional selection are crucial for optimal performance and compliance with organizational policies. The bucket name must be globally unique and follow DNS naming conventions.
 
@@ -57,9 +57,9 @@ After creating the bucket, static website content was uploaded. This includes th
 - Confirmed file accessibility within S3 console
 
 **Screenshots:**
-- `8.jpg` - Static Content Upload interface showing upload progress
-- `10.jpg` - S3 File List displaying uploaded files
-- `11.jpg` - Uploaded Files Verification with file details
+- ![1](Screenshots/8.png)
+- ![1](Screenshots/10.png)
+- ![1](Screenshots/11.png)
 
 **Why this matters:** Ensuring all content is properly uploaded before configuring CloudFront prevents issues during distribution setup. All files should be verified for correct MIME types and metadata.
 
@@ -93,7 +93,6 @@ To secure the bucket and ensure content is only accessible through CloudFront, p
       "Resource": "arn:aws:s3:::www.demo-cdn.com/*",
       "Condition": {
         "StringEquals": {
-          "AWS:SourceArn": "arn:aws:cloudfront::<your-account-id>:distribution/<your-distribution-id>"
         }
       }
     }
@@ -102,10 +101,10 @@ To secure the bucket and ensure content is only accessible through CloudFront, p
 ```
 
 **Screenshots:**
-- `12.jpg` - Public Access Block Settings showing all blocks enabled
-- `13.jpg` - Bucket Policy Console with policy editor
-- `14.jpg` - Policy JSON Content displayed in editor
-- `15.jpg` - Confirmed Policy Statement after successful application
+- ![1](Screenshots/12.png)
+- ![1](Screenshots/13.png)
+- ![1](Screenshots/14.png)
+- ![1](Screenshots/15.png)
 
 **Why this matters:** This configuration is critical for security. Without blocking public access and implementing the correct bucket policy, your S3 content could be accessed directly, bypassing CloudFront and exposing your origin server. The policy ensures that only requests authenticated by CloudFront can retrieve objects.
 
@@ -126,9 +125,9 @@ With the S3 bucket secured, the next step was creating a CloudFront distribution
 - Selected price class based on geographic requirements
 
 **Screenshots:**
-- `16.jpg` - CloudFront Distribution Creation wizard first page
-- `17.jpg` - Origin URL Selection showing S3 bucket endpoint
-- `18.jpg` - OAI/OAC Creation Confirmation dialog
+- ![1](Screenshots/16.png)
+- ![1](Screenshots/17.png)
+- ![1](Screenshots/18.png)
 
 **Why this matters:** Proper distribution configuration ensures optimal content delivery. The origin domain name format is crucial - using the full S3 REST API endpoint allows CloudFront to properly communicate with S3.
 
@@ -149,10 +148,10 @@ Origin Access Control is the modern replacement for Origin Access Identity and p
 - Confirmed policy update in S3 bucket
 
 **Screenshots:**
-- `3.jpg` - CloudFront - OAI/OAC Setup interface
-- `4.jpg` - Origin Access Selection dropdown and options
-- `5.jpg` - Attaching Policy to S3 bucket process
-- `19.jpg` - Final Origin Setup confirmation with OAC enabled
+-![1](Screenshots/3.png)
+-![1](Screenshots/4.png)
+-![1](Screenshots/5.png)
+- ![1](Screenshots/19.png)
 
 **Why this matters:** OAC is essential for secure S3 origins. It ensures that CloudFront signs requests to S3 using AWS Signature Version 4 (SigV4), providing stronger security than the legacy OAI. The bucket policy works in conjunction with OAC to authenticate CloudFront's requests.
 
@@ -162,25 +161,12 @@ Origin Access Control is the modern replacement for Origin Access Identity and p
 
 Cache behavior settings determine how CloudFront handles requests, caches content, and forwards requests to the origin.
 
-**Actions taken:**
-- Configured default cache behavior settings
-- Set Viewer Protocol Policy to "Redirect HTTP to HTTPS"
-- Allowed HTTP methods: GET, HEAD (read-only for static content)
-- Enabled automatic compression for supported file types
-- Selected appropriate Cache Policy (CachingOptimized or custom)
-- Configured query string forwarding behavior
-- Set cookie forwarding policy
-- Enabled CloudFront logs (optional but recommended)
-- Reviewed all distribution settings before deployment
-- Initiated distribution deployment
-- Monitored deployment status until "Deployed" state reached
-
 **Screenshots:**
-- `6.jpg` - Distribution Status showing deployment progress
-- `9.jpg` - CloudFront Settings overview page
-- `20.jpg` - Distribution Details showing configuration summary
-- `21.jpg` - Cache Behavior Settings with all options visible
-- `22.jpg` - Distribution Deployed confirmation with status "Enabled"
+- ![1](Screenshots/6.png)
+- ![1](Screenshots/9.png)
+- ![1](Screenshots/20.png)
+- ![1](Screenshots/21.png)
+- ![1](Screenshots/22.png)
 
 **Why this matters:** Cache behavior directly impacts performance and cost. Proper configuration ensures:
 - Content is served securely over HTTPS
@@ -235,9 +221,8 @@ The final and most critical step is validating that the entire setup works corre
 - This confirms bucket policy is working correctly and S3 content is properly secured
 
 **Screenshots:**
-- `23.jpg` - Testing CloudFront Domain showing successful content delivery in browser
-- `24.jpg` - Cache and Access Headers Verification in Developer Tools showing response headers
-
+- ![1](Screenshots/23.png)
+- ![1](Screenshots/24.png)
 **Why this matters:** Testing validates the entire implementation. It confirms:
 - CloudFront is successfully delivering content
 - Caching is working, improving performance and reducing costs
@@ -245,7 +230,6 @@ The final and most critical step is validating that the entire setup works corre
 - Only CloudFront can retrieve content from the origin
 
 ### CloudFront Distribution Configuration
-- **Distribution Domain**: `dxxxxxxxxxxxx.cloudfront.net`
 - **Origin**: S3 bucket (`www.demo-cdn.com`)
 - **Origin Protocol**: HTTPS only
 - **Viewer Protocol Policy**: Redirect HTTP to HTTPS
@@ -263,61 +247,6 @@ The final and most critical step is validating that the entire setup works corre
 - **Versioning**: Disabled
 - **Encryption**: Server-side encryption enabled (optional)
 
-### Security Measures
-1. **Origin Access Control (OAC)**: Modern authentication method replacing legacy OAI
-2. **Bucket Policy**: Restricts access to specific CloudFront distribution ARN
-3. **Public Access Block**: All four settings enabled to prevent accidental public exposure
-4. **HTTPS Only**: No unencrypted HTTP traffic allowed
-5. **Signed Requests**: CloudFront signs all requests to S3 using AWS SigV4
----
-
-## Cost Considerations
-
-- **S3 Storage**: Minimal cost for storing static files
-- **S3 Requests**: Significantly reduced due to CloudFront caching
-- **CloudFront Data Transfer**: First 1TB/month free tier (new AWS accounts)
-- **CloudFront Requests**: Charged per 10,000 requests (HTTP/HTTPS)
-- **No Charge**: Data transfer from S3 to CloudFront
-
-**Cost Optimization Tips:**
-- Use appropriate cache TTL to maximize cache hit ratio
-- Enable compression to reduce data transfer
-- Choose price class based on geographic distribution of users
-- Monitor CloudFront metrics to optimize cache behavior
-
----
-
-## Troubleshooting Guide
-
-### Issue: Content not loading from CloudFront
-**Solution:** 
-- Check distribution status is "Deployed"
-- Verify origin settings point to correct S3 bucket
-- Ensure OAC is properly configured
-- Check CloudFront logs for errors
-
-### Issue: Access Denied from CloudFront
-**Solution:**
-- Verify S3 bucket policy includes correct CloudFront distribution ARN
-- Ensure OAC is created and attached to origin
-- Check that bucket policy allows `s3:GetObject` action
-- Verify condition in bucket policy matches distribution ARN
-
-### Issue: Cache not working
-**Solution:**
-- Check cache behavior settings
-- Verify Cache-Control headers from origin
-- Use CloudFront invalidation to clear cache
-- Review cache hit ratio in CloudFront metrics
-
-### Issue: Direct S3 access still works
-**Solution:**
-- Verify all public access block settings are enabled
-- Check bucket policy doesn't have unintended Allow statements
-- Ensure no bucket ACLs grant public access
-- Review IAM policies that might grant access
-
----
 ## Conclusion
 
 This implementation successfully demonstrates a secure, scalable, and cost-effective solution for delivering static content using Amazon S3 and CloudFront. The setup ensures that all content is served through CloudFront's global CDN network while maintaining strict security controls that prevent direct access to the origin S3 bucket.
