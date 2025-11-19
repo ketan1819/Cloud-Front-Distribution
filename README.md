@@ -250,4 +250,4 @@ The final and most critical step is validating that the entire setup works corre
 
 This implementation successfully demonstrates a secure, scalable, and cost-effective solution for delivering static content using Amazon S3 and CloudFront. The setup ensures that all content is served through CloudFront's global CDN network while maintaining strict security controls that prevent direct access to the origin S3 bucket.
 
-All steps have been thoroughly documented with 24 screenshots covering every aspect from initial bucket creation through final validation testing. The implementation follows AWS best practices and is ready for production use.
+All steps have been thoroughly documented with screenshots covering every aspect from initial bucket creation through final validation testing. The implementation follows AWS best practices and is ready for production use.
